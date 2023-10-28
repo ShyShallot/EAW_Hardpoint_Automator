@@ -39,6 +39,18 @@ select {
     color: white;
 }
 
+#Is_Turret{
+    color: black;
+}
+
+#Is_Targetable {
+    color: black;
+}
+
+#Is_Destroyable {
+    color: black;
+}
+
 #Type {
     color: black;
 }

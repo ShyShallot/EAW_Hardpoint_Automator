@@ -1,4 +1,3 @@
-const convert = require('xml-js');
 const fs = require('fs');
 const {app,BrowserWindow, ipcMain} = require('electron');
 const path = require('path');
@@ -17,6 +16,8 @@ const createWindow = () => {
     })
 
     win.loadFile('index.html')
+    //win.setMenu(null)
+    win.setTitle("Empire At War Auto Hardpoint Maker")
 
     return win
 }

@@ -46,15 +46,19 @@ var options = [
 let finalValues = [];
 
 
+let isXMLValid = true;
+
 function validateEntries(entries){
-    //console.log('checking entries');
+    console.log('checking entries');
     hardpointName = document.getElementById('hardpointName')
     if(hardpointName.value == ""){
+        isXMLValid = false;
         hardpointName.setCustomValidity('Please enter a valid Name');
         hardpointName.reportValidity()
     }
     numOfHardpoints = document.getElementById('hardpointAmount')
     if(numOfHardpoints.value == ""){
+        isXMLValid = false;
         numOfHardpoints.setCustomValidity('Please enter a valid Number');
         numOfHardpoints.reportValidity()
     }
@@ -73,24 +77,41 @@ function validateEntries(entries){
             }
             continue;
         }
-        if(doesStringContainNumber(optionField.value) && !doesStringContainNumber(entry.value)){
-            if(isOptional(entry.name) && entry.value == ""){
-                continue;
-            }
+        console.log(document.getElementsByClassName(entry.name+"_String"))
+        console.log(document.getElementsByClassName(entry.name+"_String")[entry.getAttribute('count')])
+        if(entry.classList.contains('number') && entry.value === "" && document.getElementsByClassName(entry.name+"_String")[entry.getAttribute('count')].value != ""){
+            isXMLValid = false;
             entries[i].setCustomValidity('Please enter a valid number');
             entries[i].reportValidity()
             continue;
         }
-        if(entry.value == "" && isOptionValueString(optionField.value) && !optionField.optional){
-            if(!entry.classList.contains('optional')){
+        if(doesStringContainNumber(optionField.value) && !doesStringContainNumber(entry.value)){
+            if(isOptional(entry.name) && entry.value == ""){
+                continue;
+            }
+            isXMLValid = false;
+            entries[i].setCustomValidity('Please enter a valid number');
+            entries[i].reportValidity()
+            continue;
+        }
+        if(entry.value == "" && isOptionValueString(optionField.value)  && !entry.classList.contains('number') && !isOptional(entry.name)){
+            if((!entry.classList.contains('optional') ) || (optionField.optional && entry.value != "")){
+                isXMLValid = false;
                 entries[i].setCustomValidity('Please enter a valid Name');
                 entries[i].reportValidity()
                 continue;
             }
         }
+        if(entry.value != "" && isOptional(entry.name) && isOptionValueString(optionField.value) && !entry.classList.contains('number') && isOptionValueString(optionField.value) && doesStringContainNumber(entry.value)){
+            isXMLValid = false;
+            entries[i].setCustomValidity('Please enter a valid Name');
+            entries[i].reportValidity()
+            continue;
+        }
         //console.log(typeof optionField.value, optionField)
-        if(isOptionValueString(optionField.value) && doesStringContainNumber(entry.value) && !optionField.optional){
-            if(!entry.classList.contains('optional')){
+        if(isOptionValueString(optionField.value) && doesStringContainNumber(entry.value) && !entry.classList.contains('number')){
+            if((!entry.classList.contains('optional') ) || (optionField.optional && entry.value != "")){
+                isXMLValid = false;
                 entries[i].setCustomValidity('Please enter a valid Name');
                 entries[i].reportValidity()
                 continue;
@@ -103,12 +124,14 @@ function validateEntries(entries){
                 let secondaryReqValue = document.getElementById(reqs[y]);
                 if(secondaryReqValue.value == "" || secondaryReqValue.value == undefined){
                     if(isOptionValueString(secondaryReqField.name)){
+                        isXMLValid = false;
                         secondaryReqValue.setCustomValidity('Please enter a valid Number');
                         secondaryReqValue.reportValidity()
                         continue;
                     } else {
-                        secondaryReqValue.setCustomValidity('Please enter a valid Name');
-                        secondaryReqValue.reportValidity()
+                        isXMLValid = false;
+                        //secondaryReqValue.setCustomValidity('Please enter a valid Name');
+                        //secondaryReqValue.reportValidity()
                         continue;
                     }
                     
@@ -118,6 +141,7 @@ function validateEntries(entries){
         //console.log(entries[i]);
         //entries[i].setCustomValidity('Please enter a valid answer (e.g., 42).');
         //entries[i].reportValidity()
+        isXMLValid = true
         finalValues[finalValues.length] = {name: entry.name, value: entry.value};
     }
 }
@@ -269,6 +293,7 @@ window.addEventListener("DOMContentLoaded",() => {
         let newElemInput = document.createElement('input');
         newElemInput.setAttribute('id',options[i].name);
         newElemInput.setAttribute('name',options[i].name);
+        newElemInput.setAttribute('class',options[i].name+"_String");
         if(typeof options[i].value === 'number'){
             newElemInput.setAttribute('type','number')
         }
@@ -278,6 +303,14 @@ window.addEventListener("DOMContentLoaded",() => {
         labelContainer.appendChild(newElemLabel);
         labelContainer.appendChild(newElemInput);
         if(options[i].continuious){
+            let numberElemInput =  document.createElement('input');
+            numberElemInput.setAttribute('id',options[i].name);
+            numberElemInput.setAttribute('name',options[i].name);
+            numberElemInput.setAttribute('type','number');
+            numberElemInput.setAttribute('class', 'number')
+            numberElemInput.setAttribute('parent', newElemInput.id+"_String")
+            numberElemInput.setAttribute('count',0)
+            labelContainer.appendChild(numberElemInput)
             let newElemButton = document.createElement('button')
             newElemButton.innerText = "+";
             newElemButton.setAttribute('id',options[i].name)
@@ -288,18 +321,24 @@ window.addEventListener("DOMContentLoaded",() => {
                 for(let x = 0; x < entries.length; x++){
                     if(entries[x].id == target && entries[x].tagName){
                         placeBefore = entries[x+2]
-                        console.log(placeBefore)
+                        //console.log(placeBefore)
                     }
                 }
                 let clone_label = newElemLabel.cloneNode(true)
                 let clone_input = newElemInput.cloneNode(true)
+                let clone_input_number = numberElemInput.cloneNode(true)
+                clone_input_number.setAttribute('count',parseInt(numberElemInput.getAttribute('count'))+1)
                 clone_input.value = ""
-                clone_input.setAttribute('class','optional')
+                clone_input_number.value = ""
+                clone_input.setAttribute('class', `${clone_input.id}_String optional`)
+                clone_input_number.setAttribute('class','number optional')
                 let clone_br = document.createElement('br')
                 labelContainer.appendChild(clone_label)
                 labelContainer.insertBefore(clone_label,placeBefore)
                 labelContainer.appendChild(clone_input)
                 labelContainer.insertBefore(clone_input,placeBefore)
+                labelContainer.appendChild(clone_input_number)
+                labelContainer.insertBefore(clone_input_number,placeBefore)
                 labelContainer.appendChild(clone_br)
                 labelContainer.insertBefore(clone_br,placeBefore)
                 labelContainer.insertBefore(newElemButton,clone_br)
@@ -311,6 +350,9 @@ window.addEventListener("DOMContentLoaded",() => {
     }
 
     document.getElementById('createButton').addEventListener('click', () => {
+        if(!isXMLValid){
+            return;
+        }
         if(numOfHardpoints.value > 20){
             alert("Large Amount of Hardpoints, Could take a second")
         }
@@ -325,7 +367,7 @@ window.addEventListener("DOMContentLoaded",() => {
         for(let i=0;i<numOfHardpoints.value;i++){
             const num = i + 1
             const numOffset = num + 1;
-            console.log(num, numOffset)
+            //console.log(num, numOffset)
             numString = `0${num}`;
             numStringOffset =`0${numOffset}`;
             if(i > 9){
@@ -344,18 +386,20 @@ window.addEventListener("DOMContentLoaded",() => {
                     output.innerText += `\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0<${finalValues[y].name}> ${value}.ALO </${finalValues[y].name}> \n`
                     continue;
                 }
-                if(finalValues[y].name == "Fire_Bone_B"){
-                    output.innerText += `\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0<${finalValues[y].name}> ${valueOffset} </${finalValues[y].name}> \n`
-                    continue;
-                }
                 output.innerText += `\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0<${finalValues[y].name}>${value}</${finalValues[y].name}> \n`
             }
             output.innerText += (`</Hardpoint> \n \n`)
         }
     })
     
+    
 })
 
+
+window.addEventListener('click', () => {
+    let entries = document.getElementById('optionsDisplay').children
+    validateEntries(entries)
+})
 
 
 

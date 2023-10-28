@@ -9,12 +9,11 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "xlsx": "^0.18.5",
-    "xml-js": "^1.6.11"
-  },
   "devDependencies": {
     "electron": "^27.0.2",
+    "electron-packager": "^17.1.2"
+  },
+  "dependencies": {
     "electron-reloader": "^1.2.3"
   }
 }
