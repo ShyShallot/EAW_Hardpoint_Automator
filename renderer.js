@@ -353,9 +353,6 @@ window.addEventListener("DOMContentLoaded",() => {
         if(!isXMLValid){
             return;
         }
-        if(numOfHardpoints.value > 20){
-            alert("Large Amount of Hardpoints, Could take a second")
-        }
         let entries = document.getElementById('optionsDisplay').children;
         //console.log(entries.length);
         finalValues = [];
@@ -363,18 +360,19 @@ window.addEventListener("DOMContentLoaded",() => {
         finalValues = clearTurretEntries(finalValues)
         let output = document.getElementById('output')
         output.innerText = "";
+        let cong = "";
         //console.log(numOfHardpoints.value);
         for(let i=0;i<numOfHardpoints.value;i++){
             const num = i + 1
             const numOffset = num + 1;
             //console.log(num, numOffset)
-            numString = `0${num}`;
-            numStringOffset =`0${numOffset}`;
+            let numString = `0${num}`;
+            let numStringOffset =`0${numOffset}`;
             if(i > 9){
                 numString = `${num}`;
                 numStringOffset =`${numOffset}`;
             }
-            output.innerText += `<Hardpoint Name="${hardpointName.value.replace("%%",numString)}"> \n`
+            cong += `<Hardpoint Name="${hardpointName.value.replace("%%",numString)}"> \n`
             for(let y=0;y<finalValues.length;y++){
                 let value = finalValues[y].value.replace("%%",numString);
                 if(value == ''){
@@ -383,13 +381,14 @@ window.addEventListener("DOMContentLoaded",() => {
                 let valueOffset = finalValues[y].value.replace("%%",numStringOffset);
                 value = value.charAt(0).toUpperCase() + value.slice(1);
                 if(finalValues[y].name == "Model_To_Attach"){
-                    output.innerText += `\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0<${finalValues[y].name}> ${value}.ALO </${finalValues[y].name}> \n`
+                    cong += `\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0<${finalValues[y].name}> ${value}.ALO </${finalValues[y].name}> \n`
                     continue;
                 }
-                output.innerText += `\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0<${finalValues[y].name}>${value}</${finalValues[y].name}> \n`
+                cong+= `\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0<${finalValues[y].name}>${value}</${finalValues[y].name}> \n`
             }
-            output.innerText += (`</Hardpoint> \n \n`)
+            cong += (`</Hardpoint> \n \n`)
         }
+        output.innerText = cong
     })
     
     
