@@ -1,7 +1,7 @@
 const fs = require('fs');
 const {app,BrowserWindow, ipcMain} = require('electron');
 const path = require('path');
-//require("electron-reloader")(module);
+require("electron-reloader")(module);
 
 const createWindow = () => {
     const win= new BrowserWindow({
@@ -16,7 +16,7 @@ const createWindow = () => {
     })
 
     win.loadFile('index.html')
-    win.setMenu(null)
+    //win.setMenu(null)
     win.setTitle("Empire At War Auto Hardpoint Maker")
 
     return win

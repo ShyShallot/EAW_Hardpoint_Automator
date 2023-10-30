@@ -25,7 +25,7 @@ var options = [
     { name: 'Fire_Cone_Width', value: 2.0},
     { name: 'Fire_Cone_Height', value: 2.0},
     { name: 'Fire_Projectile_Type', value: 'None'},
-    { name: 'Blast_Ability_Fire_Projectile_Type', value: 2.0, optional: true},
+    { name: 'Blast_Ability_Fire_Projectile_Type', value: 'None', optional: true},
     { name: 'Fire_Min_Recharge_Seconds', value: 2.0},
     { name: 'Fire_Max_Recharge_Seconds', value: 2.0},
     { name: 'Full_Salvo_Weapon_Delay_Multiplier', value: 2.0, optional: true},
@@ -35,7 +35,7 @@ var options = [
     { name: 'Fire_Min_Range_Distance', value: 0, optional: true},
     { name: 'Fire_SFXEvent', value: 'Test'},
     { name: 'Fire_Category_Restrictions', value: '', optional: true, continuious: true},
-    { name: 'Fire_Inaccuracy_Distance', value: '', continuious: true, optional: true},
+    { name: 'Fire_Inaccuracy_Distance', value: '', continuious: true, optional: true, numberChild: true},
     { name: 'Allow_Opportunity_Fire_When_Targeting', value: true, optional: true},
     { name: 'Allow_Opportunity_Fire_When_Idle', value: true, optional: true},
     { name: 'Fire_When_In_Rocket_Attack_Mode', value: 'No', optional: true},
@@ -77,8 +77,8 @@ function validateEntries(entries){
             }
             continue;
         }
-        console.log(document.getElementsByClassName(entry.name+"_String"))
-        console.log(document.getElementsByClassName(entry.name+"_String")[entry.getAttribute('count')])
+        //console.log(document.getElementsByClassName(entry.name+"_String"))
+        //console.log(document.getElementsByClassName(entry.name+"_String")[entry.getAttribute('count')])
         if(entry.classList.contains('number') && entry.value === "" && document.getElementsByClassName(entry.name+"_String")[entry.getAttribute('count')].value != ""){
             isXMLValid = false;
             entries[i].setCustomValidity('Please enter a valid number');
@@ -142,6 +142,20 @@ function validateEntries(entries){
         //entries[i].setCustomValidity('Please enter a valid answer (e.g., 42).');
         //entries[i].reportValidity()
         isXMLValid = true
+        let skip = false
+        if(entry.name == "Fire_Category_Restrictions"){
+            console.log(entry)
+            for(let z = 0; z < finalValues.length; z++){
+                if(finalValues[z].name == "Fire_Category_Restrictions" && finalValues[z].value !== '' && !finalValues[z].value.includes(entry.value)){
+                    console.log(finalValues[z])
+                    finalValues[z].value += ", " + entry.value
+                    skip = true
+                }
+            }
+        }
+        if(skip){
+            continue;
+        }
         finalValues[finalValues.length] = {name: entry.name, value: entry.value};
     }
 }
@@ -303,14 +317,52 @@ window.addEventListener("DOMContentLoaded",() => {
         labelContainer.appendChild(newElemLabel);
         labelContainer.appendChild(newElemInput);
         if(options[i].continuious){
-            let numberElemInput =  document.createElement('input');
-            numberElemInput.setAttribute('id',options[i].name);
-            numberElemInput.setAttribute('name',options[i].name);
-            numberElemInput.setAttribute('type','number');
-            numberElemInput.setAttribute('class', 'number')
-            numberElemInput.setAttribute('parent', newElemInput.id+"_String")
-            numberElemInput.setAttribute('count',0)
-            labelContainer.appendChild(numberElemInput)
+            if(options[i].numberChild){
+                let numberElemInput =  document.createElement('input');
+                numberElemInput.setAttribute('id',options[i].name);
+                numberElemInput.setAttribute('name',options[i].name);
+                numberElemInput.setAttribute('type','number');
+                numberElemInput.setAttribute('class', 'number')
+                numberElemInput.setAttribute('parent', newElemInput.id+"_String")
+                numberElemInput.setAttribute('count',0)
+                labelContainer.appendChild(numberElemInput)
+                let newElemButton = document.createElement('button')
+                newElemButton.innerText = "+";
+                newElemButton.setAttribute('id',options[i].name)
+                newElemButton.addEventListener('click', function (event){
+                    let target = event.target.id
+                    let placeBefore = undefined
+                    let entries = document.getElementById('optionsDisplay').children;
+                    for(let x = 0; x < entries.length; x++){
+                        if(entries[x].id == target && entries[x].tagName){
+                            placeBefore = entries[x+2]
+                            //console.log(placeBefore)
+                        }
+                    }
+                    let clone_label = newElemLabel.cloneNode(true)
+                    let clone_input = newElemInput.cloneNode(true)
+                    let clone_input_number = numberElemInput.cloneNode(true)
+                    clone_input_number.setAttribute('count',parseInt(numberElemInput.getAttribute('count'))+1)
+                    clone_input.value = ""
+                    clone_input_number.value = ""
+                    clone_input.setAttribute('class', `${clone_input.id}_String optional`)
+                    clone_input_number.setAttribute('class','number optional')
+                    let clone_br = document.createElement('br')
+                    labelContainer.appendChild(clone_label)
+                    labelContainer.insertBefore(clone_label,placeBefore)
+                    labelContainer.appendChild(clone_input)
+                    labelContainer.insertBefore(clone_input,placeBefore)
+                    labelContainer.appendChild(clone_input_number)
+                    labelContainer.insertBefore(clone_input_number,placeBefore)
+                    labelContainer.appendChild(clone_br)
+                    labelContainer.insertBefore(clone_br,placeBefore)
+                    labelContainer.insertBefore(newElemButton,clone_br)
+                })
+                labelContainer.appendChild(newElemButton)
+                let br = document.createElement('br');
+                labelContainer.appendChild(br);
+                continue
+            }
             let newElemButton = document.createElement('button')
             newElemButton.innerText = "+";
             newElemButton.setAttribute('id',options[i].name)
@@ -326,19 +378,13 @@ window.addEventListener("DOMContentLoaded",() => {
                 }
                 let clone_label = newElemLabel.cloneNode(true)
                 let clone_input = newElemInput.cloneNode(true)
-                let clone_input_number = numberElemInput.cloneNode(true)
-                clone_input_number.setAttribute('count',parseInt(numberElemInput.getAttribute('count'))+1)
                 clone_input.value = ""
-                clone_input_number.value = ""
                 clone_input.setAttribute('class', `${clone_input.id}_String optional`)
-                clone_input_number.setAttribute('class','number optional')
                 let clone_br = document.createElement('br')
                 labelContainer.appendChild(clone_label)
                 labelContainer.insertBefore(clone_label,placeBefore)
                 labelContainer.appendChild(clone_input)
                 labelContainer.insertBefore(clone_input,placeBefore)
-                labelContainer.appendChild(clone_input_number)
-                labelContainer.insertBefore(clone_input_number,placeBefore)
                 labelContainer.appendChild(clone_br)
                 labelContainer.insertBefore(clone_br,placeBefore)
                 labelContainer.insertBefore(newElemButton,clone_br)
