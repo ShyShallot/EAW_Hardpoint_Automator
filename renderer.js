@@ -153,11 +153,36 @@ function validateEntries(entries){
                 }
             }
         }
+        if(entry.name == "Fire_Inaccuracy_Distance" && entry.classList.contains('number')){
+            let parentList = document.getElementsByClassName('Fire_Inaccuracy_Distance_String')
+            let parent = parentList[entry.getAttribute('count')]
+            console.log(parent)
+            console.log(finalValues)
+            let possibleParents = findElementsWithSameName(finalValues,"Fire_Inaccuracy_Distance")
+
+            if(finalValues[possibleParents[entry.getAttribute('count')]].value !== ''){
+                finalValues[possibleParents[entry.getAttribute('count')]].value += ", " + entry.value
+                //console.log(finalValues[possibleParents[entry.getAttribute('count')]])
+            }
+            continue
+        }
         if(skip){
             continue;
         }
         finalValues[finalValues.length] = {name: entry.name, value: entry.value};
     }
+}
+
+function findElementsWithSameName(arr, name) {
+    const indices = [];
+    
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i].name === name) {
+        indices.push(i);
+      }
+    }
+    
+    return indices;
 }
 
 function clearTurretEntries(finalValues){
@@ -342,7 +367,7 @@ window.addEventListener("DOMContentLoaded",() => {
                     let clone_label = newElemLabel.cloneNode(true)
                     let clone_input = newElemInput.cloneNode(true)
                     let clone_input_number = numberElemInput.cloneNode(true)
-                    clone_input_number.setAttribute('count',parseInt(numberElemInput.getAttribute('count'))+1)
+                    clone_input_number.setAttribute('count',document.getElementsByClassName('number').length)
                     clone_input.value = ""
                     clone_input_number.value = ""
                     clone_input.setAttribute('class', `${clone_input.id}_String optional`)
@@ -442,6 +467,7 @@ window.addEventListener("DOMContentLoaded",() => {
 
 
 window.addEventListener('click', () => {
+    finalValues = [];
     let entries = document.getElementById('optionsDisplay').children
     validateEntries(entries)
 })
