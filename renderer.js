@@ -6,40 +6,40 @@ var options = [
     { name: 'Is_Targetable', value: "Yes"},
     { name: 'Is_Destroyable', value: "Yes"},
     { name: 'Health', value: 100.0},
-    { name: 'Is_Turret', value: 'Yes',optional: true, requires: ['Model_To_Attach','Is_Turret','Turret_Rest_Angle','Turret_Rotate_Speed','Turret_Rotate_Extent_Degrees','Turret_Elevate_Extent_Degrees','Turret_Bone_Name','Barrel_Bone_Name']},
-    { name: 'Model_To_Attach', value: 'UNSC_TURBO_%%' ,optional: true, requires: ['Model_To_Attach','Is_Turret','Turret_Rest_Angle','Turret_Rotate_Speed','Turret_Rotate_Extent_Degrees','Turret_Elevate_Extent_Degrees','Turret_Bone_Name','Barrel_Bone_Name']},
-    { name: 'Turret_Rest_Angle', value: '0.0,0.0,0.0',optional: true, requires: ['Model_To_Attach','Is_Turret','Turret_Rest_Angle','Turret_Rotate_Speed','Turret_Rotate_Extent_Degrees','Turret_Elevate_Extent_Degrees','Turret_Bone_Name','Barrel_Bone_Name']},
-    { name: 'Turret_Rotate_Speed', value: 2.0,optional: true, requires: ['Model_To_Attach','Is_Turret','Turret_Rest_Angle','Turret_Rotate_Speed','Turret_Rotate_Extent_Degrees','Turret_Elevate_Extent_Degrees','Turret_Bone_Name','Barrel_Bone_Name']},
-    { name: 'Turret_Rotate_Extent_Degrees', value: 2.0,optional: true, requires: ['Model_To_Attach','Is_Turret','Turret_Rest_Angle','Turret_Rotate_Speed','Turret_Rotate_Extent_Degrees','Turret_Elevate_Extent_Degrees','Turret_Bone_Name','Barrel_Bone_Name']},
-    { name: 'Turret_Elevate_Extent_Degrees', value: 2.0, optional: true, requires: ['Model_To_Attach','Is_Turret','Turret_Rest_Angle','Turret_Rotate_Speed','Turret_Rotate_Extent_Degrees','Turret_Elevate_Extent_Degrees','Turret_Bone_Name','Barrel_Bone_Name']},
-    { name: 'Turret_Bone_Name', value: 'Turret',optional: true, requires: ['Model_To_Attach','Is_Turret','Turret_Rest_Angle','Turret_Rotate_Speed','Turret_Rotate_Extent_Degrees','Turret_Elevate_Extent_Degrees','Turret_Bone_Name','Barrel_Bone_Name']},
-    { name: 'Barrel_Bone_Name', value: 'Barrel',optional: true, requires: ['Model_To_Attach','Is_Turret','Turret_Rest_Angle','Turret_Rotate_Speed','Turret_Rotate_Extent_Degrees','Turret_Elevate_Extent_Degrees','Turret_Bone_Name','Barrel_Bone_Name']},
+    { name: 'Is_Turret', value: 'Yes',optional: true, type: ['HARD_POINT_WEAPON'] , requires: ['Model_To_Attach','Is_Turret','Turret_Rest_Angle','Turret_Rotate_Speed','Turret_Rotate_Extent_Degrees','Turret_Elevate_Extent_Degrees','Turret_Bone_Name','Barrel_Bone_Name']},
+    { name: 'Model_To_Attach', value: 'UNSC_TURBO_%%' ,type: ['HARD_POINT_WEAPON'] ,optional: true, requires: ['Model_To_Attach','Is_Turret','Turret_Rest_Angle','Turret_Rotate_Speed','Turret_Rotate_Extent_Degrees','Turret_Elevate_Extent_Degrees','Turret_Bone_Name','Barrel_Bone_Name']},
+    { name: 'Turret_Rest_Angle', value: '0.0,0.0,0.0',type: ['HARD_POINT_WEAPON'] ,optional: true, requires: ['Model_To_Attach','Is_Turret','Turret_Rest_Angle','Turret_Rotate_Speed','Turret_Rotate_Extent_Degrees','Turret_Elevate_Extent_Degrees','Turret_Bone_Name','Barrel_Bone_Name']},
+    { name: 'Turret_Rotate_Speed', value: 2.0,type: ['HARD_POINT_WEAPON'] ,optional: true, requires: ['Model_To_Attach','Is_Turret','Turret_Rest_Angle','Turret_Rotate_Speed','Turret_Rotate_Extent_Degrees','Turret_Elevate_Extent_Degrees','Turret_Bone_Name','Barrel_Bone_Name']},
+    { name: 'Turret_Rotate_Extent_Degrees', value: 2.0, type: ['HARD_POINT_WEAPON'] ,optional: true, requires: ['Model_To_Attach','Is_Turret','Turret_Rest_Angle','Turret_Rotate_Speed','Turret_Rotate_Extent_Degrees','Turret_Elevate_Extent_Degrees','Turret_Bone_Name','Barrel_Bone_Name']},
+    { name: 'Turret_Elevate_Extent_Degrees', value: 2.0, type: ['HARD_POINT_WEAPON'] , optional: true, requires: ['Model_To_Attach','Is_Turret','Turret_Rest_Angle','Turret_Rotate_Speed','Turret_Rotate_Extent_Degrees','Turret_Elevate_Extent_Degrees','Turret_Bone_Name','Barrel_Bone_Name']},
+    { name: 'Turret_Bone_Name', value: 'Turret',type: ['HARD_POINT_WEAPON'] ,optional: true, requires: ['Model_To_Attach','Is_Turret','Turret_Rest_Angle','Turret_Rotate_Speed','Turret_Rotate_Extent_Degrees','Turret_Elevate_Extent_Degrees','Turret_Bone_Name','Barrel_Bone_Name']},
+    { name: 'Barrel_Bone_Name', value: 'Barrel', type: ['HARD_POINT_WEAPON'] , optional: true, requires: ['Model_To_Attach','Is_Turret','Turret_Rest_Angle','Turret_Rotate_Speed','Turret_Rotate_Extent_Degrees','Turret_Elevate_Extent_Degrees','Turret_Bone_Name','Barrel_Bone_Name']},
     { name: 'Attachment_Bone', value: 'Mesh_%%'},
     { name: 'Collision_Mesh', value: 'Mesh_%%'},
     { name: 'Damage_Decal', value: 'DECAL', optional: true},
     { name: 'Damage_Particles', value: 'DAMAGE', optional: true},
-    { name: 'Engine_Particles', value: 'ENGINES', optional: true},
-    { name: 'Fire_Bone_A', value: 'FB_TURBO_%%'},
-    { name: 'Fire_Bone_B', value: 'FB_TURBO_%%'},
-    { name: 'Randomize_Between_Fire_Bones', value: false, optional: true},
-    { name: 'Fire_Cone_Width', value: 2.0},
-    { name: 'Fire_Cone_Height', value: 2.0},
-    { name: 'Fire_Projectile_Type', value: 'None'},
-    { name: 'Blast_Ability_Fire_Projectile_Type', value: 'None', optional: true},
-    { name: 'Fire_Min_Recharge_Seconds', value: 2.0},
-    { name: 'Fire_Max_Recharge_Seconds', value: 2.0},
-    { name: 'Full_Salvo_Weapon_Delay_Multiplier', value: 2.0, optional: true},
-    { name: 'Fire_Pulse_Count', value: 2.0},
-    { name: 'Fire_Pulse_Delay_Seconds', value: 2.0},
-    { name: 'Fire_Range_Distance', value: 2.0},
-    { name: 'Fire_Min_Range_Distance', value: 0, optional: true},
-    { name: 'Fire_SFXEvent', value: 'Test'},
-    { name: 'Fire_Category_Restrictions', value: '', optional: true, continuious: true},
-    { name: 'Fire_Inaccuracy_Distance', value: '', continuious: true, optional: true, numberChild: true},
-    { name: 'Allow_Opportunity_Fire_When_Targeting', value: true, optional: true},
-    { name: 'Allow_Opportunity_Fire_When_Idle', value: true, optional: true},
-    { name: 'Fire_When_In_Rocket_Attack_Mode', value: 'No', optional: true},
-    { name: 'Fire_When_In_Normal_Attack_Mode', value: 'Yes', optional: true},
+    { name: 'Engine_Particles', value: 'ENGINES', optional: true, type:'HARD_POINT_ENGINE'},
+    { name: 'Fire_Bone_A', value: 'FB_TURBO_%%', type: ['HARD_POINT_WEAPON']},
+    { name: 'Fire_Bone_B', value: 'FB_TURBO_%%', type: ['HARD_POINT_WEAPON']},
+    { name: 'Randomize_Between_Fire_Bones', value: false, optional: true, type: ['HARD_POINT_WEAPON']},
+    { name: 'Fire_Cone_Width', value: 2.0, type: ['HARD_POINT_WEAPON']},
+    { name: 'Fire_Cone_Height', value: 2.0, type: ['HARD_POINT_WEAPON']},
+    { name: 'Fire_Projectile_Type', value: 'None', type: ['HARD_POINT_WEAPON']},
+    { name: 'Blast_Ability_Fire_Projectile_Type', value: 'None', optional: true, type: ['HARD_POINT_WEAPON']},
+    { name: 'Fire_Min_Recharge_Seconds', value: 2.0, type: ['HARD_POINT_WEAPON']},
+    { name: 'Fire_Max_Recharge_Seconds', value: 2.0, type: ['HARD_POINT_WEAPON']},
+    { name: 'Full_Salvo_Weapon_Delay_Multiplier', value: 2.0, optional: true, type: ['HARD_POINT_WEAPON']},
+    { name: 'Fire_Pulse_Count', value: 2.0, type: ['HARD_POINT_WEAPON']},
+    { name: 'Fire_Pulse_Delay_Seconds', value: 2.0, type: ['HARD_POINT_WEAPON']},
+    { name: 'Fire_Range_Distance', value: 2.0, type: ['HARD_POINT_WEAPON']},
+    { name: 'Fire_Min_Range_Distance', value: 0, optional: true, type: ['HARD_POINT_WEAPON']},
+    { name: 'Fire_SFXEvent', value: 'Test', type: ['HARD_POINT_WEAPON']},
+    { name: 'Fire_Category_Restrictions', value: '', optional: true, continuious: true, type: ['HARD_POINT_WEAPON']},
+    { name: 'Fire_Inaccuracy_Distance', value: '', continuious: true, optional: true, numberChild: true, type: ['HARD_POINT_WEAPON']},
+    { name: 'Allow_Opportunity_Fire_When_Targeting', value: true, optional: true, type: ['HARD_POINT_WEAPON']},
+    { name: 'Allow_Opportunity_Fire_When_Idle', value: true, optional: true, type: ['HARD_POINT_WEAPON']},
+    { name: 'Fire_When_In_Rocket_Attack_Mode', value: 'No', optional: true, type: ['HARD_POINT_WEAPON']},
+    { name: 'Fire_When_In_Normal_Attack_Mode', value: 'Yes', optional: true, type: ['HARD_POINT_WEAPON']},
     // Add more options as needed
 ];
 
@@ -62,6 +62,7 @@ function validateEntries(entries){
         numOfHardpoints.setCustomValidity('Please enter a valid Number');
         numOfHardpoints.reportValidity()
     }
+    let hardpointType = undefined
     for(let i= 0; i < entries.length;i++){
         let entry = entries[i];
         let optionField = getOptionField(entry.name)
@@ -70,6 +71,9 @@ function validateEntries(entries){
                 if(entry.options[entry.selectedIndex].value == 'N/A'){
                     continue;
                 }
+                if(entry.options[entry.selectedIndex].id == "Type"){
+                    hardpointType = entry.options[entry.selectedIndex].value
+                }
                 finalValues[finalValues.length] = {name: entry.options[entry.selectedIndex].id, value: entry.options[entry.selectedIndex].value};
             }
             if(getOptionField(entry.id) != undefined){
@@ -77,6 +81,7 @@ function validateEntries(entries){
             }
             continue;
         }
+        console.log(hardpointType)
         //console.log(document.getElementsByClassName(entry.name+"_String"))
         //console.log(document.getElementsByClassName(entry.name+"_String")[entry.getAttribute('count')])
         if(entry.classList.contains('number') && entry.value === "" && document.getElementsByClassName(entry.name+"_String")[entry.getAttribute('count')].value != ""){
@@ -85,7 +90,7 @@ function validateEntries(entries){
             entries[i].reportValidity()
             continue;
         }
-        if(doesStringContainNumber(optionField.value) && !doesStringContainNumber(entry.value)){
+        if(doesStringContainNumber(optionField.value) && !doesStringContainNumber(entry.value) && hardpointType.includes(optionField.type)){
             if(isOptional(entry.name) && entry.value == ""){
                 continue;
             }
@@ -94,7 +99,7 @@ function validateEntries(entries){
             entries[i].reportValidity()
             continue;
         }
-        if(entry.value == "" && isOptionValueString(optionField.value)  && !entry.classList.contains('number') && !isOptional(entry.name)){
+        if(entry.value == "" && isOptionValueString(optionField.value)  && !entry.classList.contains('number') && !isOptional(entry.name) && hardpointType.includes(optionField.type)){
             if((!entry.classList.contains('optional') ) || (optionField.optional && entry.value != "")){
                 isXMLValid = false;
                 entries[i].setCustomValidity('Please enter a valid Name');
@@ -102,14 +107,14 @@ function validateEntries(entries){
                 continue;
             }
         }
-        if(entry.value != "" && isOptional(entry.name) && isOptionValueString(optionField.value) && !entry.classList.contains('number') && isOptionValueString(optionField.value) && doesStringContainNumber(entry.value)){
+        if(entry.value != "" && isOptional(entry.name) && isOptionValueString(optionField.value) && !entry.classList.contains('number') && isOptionValueString(optionField.value) && doesStringContainNumber(entry.value) && hardpointType.includes(optionField.type)){
             isXMLValid = false;
             entries[i].setCustomValidity('Please enter a valid Name');
             entries[i].reportValidity()
             continue;
         }
         //console.log(typeof optionField.value, optionField)
-        if(isOptionValueString(optionField.value) && doesStringContainNumber(entry.value) && !entry.classList.contains('number')){
+        if(isOptionValueString(optionField.value) && doesStringContainNumber(entry.value) && !entry.classList.contains('number') && hardpointType.includes(optionField.type)){
             if((!entry.classList.contains('optional') ) || (optionField.optional && entry.value != "")){
                 isXMLValid = false;
                 entries[i].setCustomValidity('Please enter a valid Name');
@@ -123,7 +128,7 @@ function validateEntries(entries){
                 let secondaryReqField = getOptionField(reqs[y]);
                 let secondaryReqValue = document.getElementById(reqs[y]);
                 if(secondaryReqValue.value == "" || secondaryReqValue.value == undefined){
-                    if(isOptionValueString(secondaryReqField.name)){
+                    if(isOptionValueString(secondaryReqField.name) && hardpointType.includes(optionField.type)){
                         isXMLValid = false;
                         secondaryReqValue.setCustomValidity('Please enter a valid Number');
                         secondaryReqValue.reportValidity()
@@ -254,8 +259,6 @@ function isOptionValueString(value){
     }
     return false
 }
-
-
 
 
 window.addEventListener("DOMContentLoaded",() => {
@@ -433,6 +436,7 @@ window.addEventListener("DOMContentLoaded",() => {
         output.innerText = "";
         let cong = "";
         //console.log(numOfHardpoints.value);
+        let hardpointType = undefined
         for(let i=0;i<numOfHardpoints.value;i++){
             const num = i + 1
             const numOffset = num + 1;
@@ -445,12 +449,19 @@ window.addEventListener("DOMContentLoaded",() => {
             }
             cong += `<Hardpoint Name="${hardpointName.value.replace("%%",numString)}"> \n`
             for(let y=0;y<finalValues.length;y++){
+                if(finalValues[y].name == "Type"){
+                    hardpointType = finalValues[y].value
+                }
                 let value = finalValues[y].value.replace("%%",numString);
                 if(value == ''){
                     continue
                 }
                 let valueOffset = finalValues[y].value.replace("%%",numStringOffset);
                 value = value.charAt(0).toUpperCase() + value.slice(1);
+                let options = getOptionField(finalValues[y].name)
+                if(!hardpointType.includes(options.type) && options.type !== undefined){
+                    continue
+                }
                 if(finalValues[y].name == "Model_To_Attach"){
                     cong += `\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0<${finalValues[y].name}> ${value}.ALO </${finalValues[y].name}> \n`
                     continue;
