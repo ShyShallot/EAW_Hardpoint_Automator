@@ -49,7 +49,7 @@ let finalValues = [];
 let isXMLValid = true;
 
 function validateEntries(entries){
-    console.log('checking entries');
+    //console.log('checking entries');
     hardpointName = document.getElementById('hardpointName')
     if(hardpointName.value == ""){
         isXMLValid = false;
@@ -81,7 +81,7 @@ function validateEntries(entries){
             }
             continue;
         }
-        console.log(hardpointType)
+        //console.log(hardpointType)
         //console.log(document.getElementsByClassName(entry.name+"_String"))
         //console.log(document.getElementsByClassName(entry.name+"_String")[entry.getAttribute('count')])
         if(entry.classList.contains('number') && entry.value === "" && document.getElementsByClassName(entry.name+"_String")[entry.getAttribute('count')].value != ""){
@@ -149,10 +149,10 @@ function validateEntries(entries){
         isXMLValid = true
         let skip = false
         if(entry.name == "Fire_Category_Restrictions"){
-            console.log(entry)
+            //console.log(entry)
             for(let z = 0; z < finalValues.length; z++){
                 if(finalValues[z].name == "Fire_Category_Restrictions" && finalValues[z].value !== '' && !finalValues[z].value.includes(entry.value)){
-                    console.log(finalValues[z])
+                    //console.log(finalValues[z])
                     finalValues[z].value += ", " + entry.value
                     skip = true
                 }
@@ -161,8 +161,8 @@ function validateEntries(entries){
         if(entry.name == "Fire_Inaccuracy_Distance" && entry.classList.contains('number')){
             let parentList = document.getElementsByClassName('Fire_Inaccuracy_Distance_String')
             let parent = parentList[entry.getAttribute('count')]
-            console.log(parent)
-            console.log(finalValues)
+            //console.log(parent)
+            //console.log(finalValues)
             let possibleParents = findElementsWithSameName(finalValues,"Fire_Inaccuracy_Distance")
 
             if(finalValues[possibleParents[entry.getAttribute('count')]].value !== ''){
@@ -443,7 +443,7 @@ window.addEventListener("DOMContentLoaded",() => {
             //console.log(num, numOffset)
             let numString = `0${num}`;
             let numStringOffset =`0${numOffset}`;
-            if(i > 9){
+            if(i >= 9){
                 numString = `${num}`;
                 numStringOffset =`${numOffset}`;
             }
